@@ -2,7 +2,7 @@
     <img src="https://raw.githubusercontent.com/Jobsity/ReactChallenge/main/src/assets/jobsity_logo_small.png"/>
 </div>
 
-# Front-end Javascript Challenge
+# React Challenge
 
 ## Description
 
@@ -32,10 +32,17 @@ You should start by rendering a single month view of a calendar for the current 
 ## Considerations
 
  - The project is completely focused on Front-end. Ignore the Back-end.
+ - Create your Calendar in `/calendar`
  - Feel free to use small helper libraries for:
  -- UI Elements.
  -- Date/Time handling.
  - **You must create the calendar component yourself**. Do not user calendar libraries like FullCalendar or Bootstrap Calendar.
  - Provide working API keys to any external API you use.
+ - We have implemented Redux thunk for state management, but you may use any state manager you are familiar with.
  - Show us your capabilities on CSS and styling, if possible.
 
+# How to deploy
+
+ - Run `npm install` | `yarn install` to install all dependencies.
+ - Run `npm start`   | `yarn run` to run the app locally.
+ - You can find the project running on `localhost:3000`.
