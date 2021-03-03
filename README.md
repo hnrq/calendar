@@ -32,7 +32,7 @@ You should start by rendering a single month view of a calendar for the current 
 ## Considerations
 
  - The project is completely focused on Front-end. Ignore the Back-end.
- - Create your Calendar in `/calendar`
+ - Create your Calendar using the route `/calendar`
  - Feel free to use small helper libraries for:
  -- UI Elements.
  -- Date/Time handling.
