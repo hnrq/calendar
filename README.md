@@ -20,7 +20,7 @@ You should start by rendering a single month view of a calendar for the current 
 
 ## Mandatory features
  - Ability to add "*reminders*" (max. 30 characters) for a day and time specified by the user. Also, include a city.
- - Ability to edit reminders - including changing text, city, day, time and color.
+ - Ability to edit reminders - including changing text, city, day and time.
  - Add a weather service call from [OpenWeather](https://openweathermap.org/forecast16) and get the weather forecast (e.g. Rain) for the date of the calendar reminder based on the city.
 
 ## Bonus (Optional)
