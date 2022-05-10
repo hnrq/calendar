@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
 function Calendar(props) {
   // your calendar implementation Goes here!
-  // Be creative 
+  // Be creative
   return (
     <div className="container">
-        <h1>Calendar</h1>
+      <h1>Calendar</h1>
     </div>
-  )
+  );
 }
 
 export default Calendar;
