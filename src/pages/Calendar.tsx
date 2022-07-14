@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC } from "react";
 
-function Calendar(props) {
+const Calendar: FC = () => {
   // your calendar implementation Goes here!
   // Be creative
   return (
@@ -8,6 +8,6 @@ function Calendar(props) {
       <h1>Calendar</h1>
     </div>
   );
-}
+};
 
 export default Calendar;

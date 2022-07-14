@@ -1,4 +1,10 @@
-import { createStore, applyMiddleware, compose } from "redux";
+import {
+  createStore,
+  applyMiddleware,
+  compose,
+  Reducer,
+  StoreEnhancer,
+} from "redux";
 import thunk from "redux-thunk";
 
 const initialState = {};
@@ -13,9 +19,12 @@ if (process.env.NODE_ENV === "development") {
   }
 }
 
-const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
+const composedEnhancers: StoreEnhancer = compose(
+  applyMiddleware(...middleware),
+  ...enhancers
+);
 
-export default function getStore(reducer) {
+export default function getStore(reducer: Reducer) {
   const store = createStore(reducer, initialState, composedEnhancers);
   return store;
 }
