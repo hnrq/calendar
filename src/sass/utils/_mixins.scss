@@ -1,9 +1,3 @@
-@use "variables";
-
-@function spacing($multiplier) {
-  @return calc(var(--base-spacing) * #{$multiplier});
-}
-
 /** Base color should be HUE, SATURATION, without providing Lightness */
 @mixin generate-palette($base-color, $name) {
   @for $i from 1 to 10 {

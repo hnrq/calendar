@@ -1,5 +1,3 @@
-@use "spacing";
-
 @function spacing($multiplier) {
   @return calc(var(--base-spacing) * $multiplier);
 }
@@ -17,7 +15,7 @@
 @each $spacing-type in ("margin", "padding") {
   @for $i from 0 to 6 {
     $spacing-type-initial: str-slice($spacing-type, 0, 1);
-    $spacing: spacing.spacing($i);
+    $spacing: spacing($i);
 
     .#{$spacing-type-initial}-#{$i} {
       #{$spacing-type}: $spacing;
