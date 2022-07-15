@@ -1,0 +1,20 @@
+@use "../../sass/utils";
+
+.day-of-month {
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__label {
+    font-weight: 600;
+  }
+  &__reminders {
+    display: flex;
+    flex-direction: column;
+    row-gap: utils.spacing(0.5);
+  }
+  overflow: hidden;
+}
