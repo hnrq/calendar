@@ -1,0 +1,18 @@
+@use "../../sass/utils";
+
+.reminder {
+  background-color: var(--color-primary-50);
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  color: var(--background);
+  border-radius: 2px;
+  font-size: 0.8rem;
+  padding: utils.spacing(0.25);
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--color-primary-40);
+  }
+}
