@@ -31,6 +31,7 @@ const DayOfMonth: FC<DayOfMonthProps> = ({ date, reminders, onClick }) => {
       >
         {reminders.map((reminder) => (
           <motion.div
+            key={reminder.id}
             variants={{
               open: { opacity: 1 },
               closed: { opacity: 0 },
@@ -38,7 +39,6 @@ const DayOfMonth: FC<DayOfMonthProps> = ({ date, reminders, onClick }) => {
           >
             <Reminder
               reminder={reminder}
-              key={reminder.id}
               onClick={(e: MouseEvent<HTMLDivElement>) => {
                 e.stopPropagation();
                 const params = new URLSearchParams({});

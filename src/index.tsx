@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider as ReduxProvider } from "react-redux";
 
 import { compose } from "redux";
@@ -18,13 +18,12 @@ declare global {
   }
 }
 
-ReactDOM.render(
+createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ReduxProvider store={getStore(reducers)}>
       <Main />
     </ReduxProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
