@@ -1,0 +1,36 @@
+@use "../../sass/utils/spacing";
+
+.button {
+  border: none;
+  padding: spacing.spacing(1) spacing.spacing(2);
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 4px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    outline: none;
+  }
+
+  &--primary {
+    background-color: var(--color-primary-50);
+    color: var(--background);
+
+    &:hover {
+      background-color: var(--color-primary-40);
+    }
+  }
+
+  &--secondary {
+    color: var(--color-primary-50);
+    background: none;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+}
