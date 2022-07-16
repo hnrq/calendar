@@ -1,0 +1,25 @@
+@use "../../sass/utils/spacing";
+
+.text-field {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font);
+  &__input {
+    background-color: #eee;
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--body-font);
+  }
+
+  &__helper-text {
+    font-size: 0.75rem;
+    margin-top: spacing.spacing(0.5);
+    &--error {
+      color: var(--error-color);
+    }
+    &--hidden {
+      display: none;
+    }
+  }
+}
