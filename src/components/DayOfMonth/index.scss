@@ -17,4 +17,8 @@
     row-gap: utils.spacing(0.5);
   }
   overflow: hidden;
+
+  &--weekend {
+    color: var(--color-primary-70);
+  }
 }
