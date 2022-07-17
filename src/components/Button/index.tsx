@@ -1,16 +1,15 @@
-import { FC, ButtonHTMLAttributes } from "react";
+import { FC, ButtonHTMLAttributes, PropsWithChildren } from "react";
 
 import classNames from "classnames";
 
 import "./index.scss";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "icon";
   fullWidth?: boolean;
-  children: string;
 }
 
-const Button: FC<ButtonProps> = ({
+const Button: FC<PropsWithChildren<ButtonProps>> = ({
   variant = "primary",
   fullWidth,
   children,
@@ -22,6 +21,7 @@ const Button: FC<ButtonProps> = ({
       "button--full-width": fullWidth,
       "button--primary": variant === "primary",
       "button--secondary": variant === "secondary",
+      "button--icon": variant === "icon",
     })}
     {...htmlButtonProps}
   >

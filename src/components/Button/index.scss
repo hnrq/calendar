@@ -33,4 +33,9 @@
   &--full-width {
     width: 100%;
   }
+
+  &--icon {
+    padding: 0;
+    color: var(--text-medium-emphasis);
+  }
 }

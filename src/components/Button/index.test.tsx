@@ -19,14 +19,14 @@ describe("<Button />", () => {
     expect(getByText(content)).toHaveClass("button--full-width");
   });
 
-  it("renders with .primary class by default", () => {
+  it("renders with .button--primary class by default", () => {
     const content = "Label";
     const { getByText } = renderButton({ children: content });
 
     expect(getByText(content)).toHaveClass("button--primary");
   });
 
-  it("renders with .secondary class if variant === secondary", () => {
+  it("renders with .button--secondary class if variant === secondary", () => {
     const content = "Label";
     const { getByText } = renderButton({
       children: content,
@@ -34,5 +34,14 @@ describe("<Button />", () => {
     });
 
     expect(getByText(content)).toHaveClass("button--secondary");
+  });
+  it("renders with .button--icon class if variant === icon", () => {
+    const content = "Label";
+    const { getByText } = renderButton({
+      children: content,
+      variant: "icon",
+    });
+
+    expect(getByText(content)).toHaveClass("button--icon");
   });
 });
