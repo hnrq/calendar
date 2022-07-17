@@ -1,17 +1,33 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useMemo } from "react";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 
-import App from "../pages/App";
-import Calendar from "../pages/Calendar";
+import Modal from "components/Modal";
+import App from "pages/App";
+import Calendar, { CalendarRoute } from "pages/Calendar";
+import ReminderPage, { ReminderRoute } from "pages/Reminder";
 
-function routes() {
+const RoutesComponent = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const state = useMemo(() => location.state, [location]) as {
+    from?: Location;
+  };
+
   return (
-    <BrowserRouter>
-      <Routes>
+    <>
+      <Routes location={state?.from || location}>
         <Route path="/" element={<App />} />
-        <Route path="/calendar" element={<Calendar />} />
+        <Route path={`${CalendarRoute}`} element={<Calendar />} />
+        <Route path={`${ReminderRoute}`} element={<ReminderPage />} />
       </Routes>
-    </BrowserRouter>
+      <Modal open={Boolean(state?.from)} onClose={() => navigate(-1)}>
+        <Routes>
+          <Route path={`${ReminderRoute}`} element={<ReminderPage />} />
+        </Routes>
+      </Modal>
+    </>
   );
-}
+};
 
-export default routes;
+export default RoutesComponent;

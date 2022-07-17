@@ -1,9 +1,11 @@
-import React from "react";
+import { BrowserRouter } from "react-router-dom";
 
 import Routes from "./routes";
 
-function Main() {
-  return <Routes />;
-}
+const Main = () => (
+  <BrowserRouter>
+    <Routes />
+  </BrowserRouter>
+);
 
 export default Main;
