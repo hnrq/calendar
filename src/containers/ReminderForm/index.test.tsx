@@ -47,10 +47,10 @@ describe("<ReminderForm />", () => {
       target: { value: mockReminders[0].city },
     });
     fireEvent.input(getByPlaceholderText("Date"), {
-      target: { value: format(mockReminders[0].dateTime, "yyyy-MM-dd") },
+      target: { value: mockReminders[0].date },
     });
     fireEvent.input(getByPlaceholderText("Time"), {
-      target: { value: format(mockReminders[0].dateTime, "HH:mm") },
+      target: { value: mockReminders[0].time },
     });
 
     fireEvent.click(getByText("Save Reminder"));
@@ -62,7 +62,7 @@ describe("<ReminderForm />", () => {
 
   it("sets initial values for the fields if provided", () => {
     const { getByPlaceholderText } = renderReminderForm({
-      defaultValue: _.omit(mockReminders[0], "id"),
+      defaultValues: _.omit(mockReminders[0], "id"),
     });
 
     expect((getByPlaceholderText("Label") as HTMLInputElement).value).toBe(
@@ -72,10 +72,10 @@ describe("<ReminderForm />", () => {
       mockReminders[0].city
     );
     expect((getByPlaceholderText("Date") as HTMLInputElement).value).toBe(
-      format(mockReminders[0].dateTime, "yyyy-MM-dd")
+      mockReminders[0].date
     );
     expect((getByPlaceholderText("Time") as HTMLInputElement).value).toBe(
-      format(mockReminders[0].dateTime, "HH:mm")
+      mockReminders[0].time
     );
   });
 

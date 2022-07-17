@@ -31,10 +31,10 @@ describe("<Reminder />", () => {
   });
 
   it("renders a time", () => {
-    const dateTime = new Date().getTime();
-    const { getByText } = renderReminder({ reminder: { dateTime } });
+    const time = "14:16";
+    const { getByText } = renderReminder({ reminder: { time } });
 
-    expect(getByText(format(dateTime, "HH:mm"))).toBeInTheDocument();
+    expect(getByText(time)).toBeInTheDocument();
   });
 
   it("calls onClick function when clicked ", () => {

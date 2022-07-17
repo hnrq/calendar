@@ -11,7 +11,7 @@ import "./index.scss";
 
 export interface ReminderFormProps {
   onSubmit: (reminder: FormValues) => void;
-  defaultValue?: Omit<Reminder, "id">;
+  defaultValues?: Omit<Reminder, "id">;
 }
 
 interface FormValues {
@@ -21,16 +21,10 @@ interface FormValues {
   time: string;
 }
 
-const ReminderForm: FC<ReminderFormProps> = ({ onSubmit, defaultValue }) => {
+const ReminderForm: FC<ReminderFormProps> = ({ onSubmit, defaultValues }) => {
   const { register, formState, handleSubmit } = useForm<FormValues>({
     mode: "onBlur",
-    defaultValues: defaultValue
-      ? {
-          ..._.omit(defaultValue, "dateTime"),
-          date: format(defaultValue.dateTime, "yyyy-MM-dd"),
-          time: format(defaultValue.dateTime, "HH:mm"),
-        }
-      : undefined,
+    defaultValues,
   });
 
   return (

@@ -6,36 +6,50 @@ export interface Reminder {
   id: string;
   label: string;
   city: string;
-  dateTime: number;
+  date: string;
+  time: string;
 }
 
-const initialState: Reminder[] = [];
+const initialState: Record<string, Reminder[]> = {};
 
 const remindersReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(actions.createReminder, (state, action) => {
-      const insertionIndex = state.findIndex(
-        (reminder) => reminder.dateTime > action.payload.dateTime
+      if (state[action.payload.date] === undefined)
+        state[action.payload.date] = [];
+      const insertionIndex = state[action.payload.date].findIndex(
+        (reminder) => reminder.time > action.payload.time
       );
       const uuid = crypto.randomUUID();
       const reminder = { id: uuid, ...action.payload };
 
-      if (insertionIndex === -1) state.push(reminder);
-      else state.splice(insertionIndex, 0, reminder);
+      if (insertionIndex === -1) state[action.payload.date].push(reminder);
+      else state[action.payload.date].splice(insertionIndex, 0, reminder);
     })
     .addCase(actions.editReminder, (state, action) => {
-      const reminderIndex = state.findIndex(
+      const { currentDate, reminder } = action.payload;
+      const reminderIndex = state[currentDate].findIndex(
+        ({ id }) => id === reminder.id
+      );
+
+      if (currentDate === reminder.date)
+        state[reminder.date].splice(reminderIndex, 1, reminder);
+      else {
+        if (state[reminder.date] === undefined) state[reminder.date] = [];
+        const insertionIndex = state[reminder.date].findIndex(
+          ({ time }) => time > reminder.time
+        );
+
+        state[currentDate].splice(reminderIndex, 1);
+        state[reminder.date].splice(insertionIndex, 0, reminder);
+      }
+    })
+    .addCase(actions.deleteReminder, (state, action) => {
+      const reminderIndex = state[action.payload.date].findIndex(
         (reminder) => reminder.id === action.payload.id
       );
 
-      state.splice(reminderIndex, 1, action.payload);
-    })
-    .addCase(actions.deleteReminder, (state, action) => {
-      const reminderIndex = state.findIndex(
-        (reminder) => reminder.id === action.payload
-      );
-
-      state.splice(reminderIndex, 1);
+      state[action.payload.date].splice(reminderIndex, 1);
     });
 });
 

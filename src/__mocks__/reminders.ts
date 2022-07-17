@@ -2,25 +2,29 @@ const reminders = [
   {
     id: "1",
     label: "Take the trash out",
-    dateTime: 1657991828812,
+    date: "2021-11-21",
+    time: "07:00",
     city: "Belo Horizonte, MG",
   },
   {
     id: "2",
     label: "Wash clothes",
-    dateTime: 1657991828812,
+    date: "2021-11-21",
+    time: "07:30",
     city: "Belo Horizonte, MG",
   },
   {
     id: "3",
     label: "Daily",
-    dateTime: 1657991828812,
+    date: "2021-11-21",
+    time: "08:00",
     city: "Belo Horizonte, MG",
   },
   {
     id: "4",
     label: "Lunch with dad",
-    dateTime: 1657991828812,
+    date: "2021-11-21",
+    time: "08:30",
     city: "Belo Horizonte, MG",
   },
 ];
