@@ -1,0 +1,13 @@
+.reminder-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__city {
+    font-size: 0.8rem;
+  }
+
+  &__edit-button {
+    align-self: flex-end;
+  }
+}
