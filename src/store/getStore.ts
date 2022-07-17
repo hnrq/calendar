@@ -1,15 +1,23 @@
 import {
-  createStore,
-  applyMiddleware,
-  compose,
-  Reducer,
-  StoreEnhancer,
-} from "redux";
+  configureStore,
+  Middleware,
+  ReducersMapObject,
+} from "@reduxjs/toolkit";
+import remindersReducer from "reducers/reminders";
 import thunk from "redux-thunk";
 
-const initialState = {};
+export interface RootState {
+  reminders: ReturnType<typeof remindersReducer>;
+}
+
+const localStorageMiddleware: Middleware<{}, RootState> =
+  (store) => (next) => (action) => {
+    const result = next(action);
+    localStorage.setItem("state", JSON.stringify(store.getState()));
+    return result;
+  };
+
 const enhancers = [];
-const middleware = [thunk];
 
 if (process.env.NODE_ENV === "development") {
   const devToolsExtension = window.devToolsExtension;
@@ -19,12 +27,12 @@ if (process.env.NODE_ENV === "development") {
   }
 }
 
-const composedEnhancers: StoreEnhancer = compose(
-  applyMiddleware(...middleware),
-  ...enhancers
-);
+export default function getStore(reducer: ReducersMapObject) {
+  const store = configureStore({
+    reducer,
 
-export default function getStore(reducer: Reducer) {
-  const store = createStore(reducer, initialState, composedEnhancers);
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().prepend(thunk).prepend(localStorageMiddleware),
+  });
   return store;
 }
