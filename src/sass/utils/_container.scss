@@ -1,0 +1,8 @@
+@use "variables";
+
+@each $breakpoint, $value in variables.$breakpoints {
+  .container-#{$breakpoint} {
+    max-width: $value;
+    margin: 0 auto;
+  }
+} ;
