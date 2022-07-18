@@ -4,7 +4,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 
 import Button from "components/Button";
 import ReminderForm from "containers/ReminderForm";
-import { CalendarRoute } from "pages/Calendar";
+import { format } from "date-fns";
 import { createReminder, editReminder } from "reducers/reminders/actions";
 import { RootState } from "store/getStore";
 
@@ -55,26 +55,14 @@ const ReminderPage = () => {
                   })
                 );
                 setEditMode(false);
-                navigate(
-                  {
-                    pathname: ReminderRoute,
-                    search: new URLSearchParams({
-                      date: formValues.date,
-                      id: reminder.id,
-                    }).toString(),
-                  },
-                  { state: { from: CalendarRoute } }
-                );
-              } else {
-                dispatch(createReminder(formValues));
-                navigate(CalendarRoute);
-              }
+              } else dispatch(createReminder(formValues));
+              navigate(-1);
             }}
           />
         </>
       )}
       {!editMode && (
-        <>
+        <div style={{ width: "300px" }} className="reminder-page__preview">
           <Button
             onClick={() => setEditMode(true)}
             variant="icon"
@@ -82,12 +70,19 @@ const ReminderPage = () => {
           >
             <span className="material-icons">edit</span>
           </Button>
-          <h2 className="reminder-page__label mb-1">{reminder?.label}</h2>
+          <h1 className="reminder-page__label m-0">{reminder?.label}</h1>
           <span className="reminder-page__date">
-            {reminder?.date}, {reminder?.time}
+            {reminder?.time} - {format(new Date(reminder?.date ?? ""), "PPP")}
           </span>
-          <span className="reminder-page__city">{reminder?.city?.name}</span>
-        </>
+          <small className="reminder-page__city">{reminder?.city?.name}</small>
+
+          {reminder?.weather && (
+            <div className="reminder-page__weather mt-2">
+              {Number(reminder?.weather?.main.temp - 273.15).toFixed(1)}° C,{" "}
+              {reminder?.weather?.weather[0].main}
+            </div>
+          )}
+        </div>
       )}
     </div>
   );

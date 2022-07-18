@@ -1,12 +1,18 @@
 @use "../../sass/utils/spacing";
 
 .combobox {
-  display: flex;
-  flex-direction: column;
   font-family: var(--body-font);
+  width: 100%;
 
-  .rw-widget-picker {
+  & .rw-widget-picker {
     border: none;
+    grid-template: 1fr / minmax(0, 1fr) 2em;
+    &.rw-hide-caret {
+      grid-template-columns: 1fr;
+    }
+  }
+  & .rw-picker-caret {
+    background: #eee;
   }
 
   &__input.rw-input {
@@ -14,7 +20,8 @@
     color: var(--text-high-emphasis);
     font-weight: 500;
     border: none;
-    border-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
     font-family: var(--body-font);
   }
 

@@ -1,47 +1,86 @@
-import axios from "axios";
+import { useEffect, useMemo } from "react";
 
-const weatherApi = axios.create({
-  baseURL: "http://dataservice.accuweather.com",
-  params: {
-    apikey: process.env.REACT_APP_API_KEY,
-  },
-});
+import useFetch, { IncomingOptions } from "use-http";
 
 export interface City {
-  locationKey: string;
+  id: string;
+  lat: number;
+  lon: number;
   name: string;
 }
 
 interface CityResponse {
-  Version: number;
-  Key: string;
-  Type: string;
-  Rank: number;
-  LocalizedName: string;
-  Country: {
-    ID: string;
-    LocalizedName: string;
-  };
-  AdministrativeArea: {
-    ID: string;
-    LocalizedName: string;
+  id: number;
+  name: string;
+  region: string;
+  country: string;
+  lat: number;
+  lon: number;
+  url: string;
+}
+
+export const useCitySearch = (q: string, options?: IncomingOptions) => {
+  const searchParams = useMemo(
+    () =>
+      new URLSearchParams({ q, appid: process.env.REACT_APP_API_KEY ?? "" }),
+    [q]
+  );
+
+  const fetch = useFetch<City[]>(process.env.REACT_APP_API_HOST, {
+    onNewData: (_, newData?: CityResponse[]) =>
+      newData?.map((city) => ({
+        lat: city.lat,
+        lon: city.lon,
+        id: `${city.lat}${city.lon}`,
+        name: `${city.name}, ${city.country}`,
+      })) ?? [],
+    ...options,
+  });
+
+  useEffect(() => {
+    if (Boolean(q)) fetch.get(`/geo/1.0/direct?${searchParams.toString()}`);
+  }, [q, fetch, searchParams]);
+
+  return fetch;
+};
+
+export interface Weather {
+  weather: {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }[];
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    humidity: number;
   };
 }
 
-export const autocompleteRegion = async (query: string) => {
-  if (query === "") return [];
+export const useWeather = (options?: IncomingOptions) => {
+  const fetch = useFetch<Weather>(process.env.REACT_APP_API_HOST, {
+    onNewData: (_, newData?: Weather) =>
+      ({
+        weather: newData?.weather,
+        main: newData?.main,
+      } ?? {}),
+    ...options,
+  });
 
-  const { data } = await weatherApi.get<CityResponse[]>(
-    "/locations/v1/cities/autocomplete",
-    { params: { q: query } }
-  );
+  return {
+    ...fetch,
+    get: async (city: City) => {
+      const params = new URLSearchParams({
+        lat: city.lat.toString(),
+        lon: city.lon.toString(),
+        appid: process.env.REACT_APP_API_KEY ?? "",
+      });
 
-  const result: City[] = data?.map((city) => ({
-    locationKey: city.Key,
-    name: `${city.LocalizedName}, ${city.AdministrativeArea.ID} - ${city.Country.LocalizedName}`,
-  }));
-
-  return result ?? [];
+      return fetch.get(`/data/2.5/weather?${params.toString()}`);
+    },
+  };
 };
-
-export default weatherApi;

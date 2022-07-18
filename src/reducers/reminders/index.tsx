@@ -1,6 +1,5 @@
-import mockReminders from "__mocks__/reminders";
 import { createReducer } from "@reduxjs/toolkit";
-import { City } from "api/weatherApi";
+import { City, Weather } from "api/weatherApi";
 
 import * as actions from "./actions";
 
@@ -8,13 +7,14 @@ export interface Reminder {
   id: string;
   label: string;
   city: City;
+  weather?: Weather;
   date: string;
   time: string;
 }
 
-const initialState: Record<string, Reminder[]> = {
-  [mockReminders[0].date]: mockReminders,
-};
+const initialState: Record<string, Reminder[]> =
+  JSON.parse(localStorage.getItem("reminders") ?? "{}") ??
+  ({} as Record<string, Reminder[]>);
 
 const remindersReducer = createReducer(initialState, (builder) => {
   builder

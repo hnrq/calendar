@@ -24,14 +24,10 @@
   }
 
   &__controls-label {
-    font-size: 3rem;
     margin-left: auto;
   }
 
-  & .day-of-month {
-    background-color: var(--background);
-    &--different-month {
-      color: var(--text-medium-emphasis);
-    }
+  & .day-of-month--different-month {
+    color: var(--text-medium-emphasis);
   }
 }

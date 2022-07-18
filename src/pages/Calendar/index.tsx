@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 import Button from "components/Button";
 import DayOfMonth from "components/DayOfMonth";
-import { format, isSameMonth, isWeekend } from "date-fns";
+import { format, isSameMonth, isToday } from "date-fns";
 import { DayRoute } from "pages/Day";
+import { ReminderRoute } from "pages/Reminder";
 import { RootState } from "store/getStore";
 import { getDaysOfCalendarMonth } from "utils/date";
 
@@ -62,9 +63,22 @@ const Calendar: FC = () => {
         >
           Today
         </Button>
-        <h2 className="calendar__controls-label">
+        <Button
+          className="ml-3 calendar__today"
+          onClick={() => {
+            navigate(
+              {
+                pathname: ReminderRoute,
+              },
+              { state: { from: CalendarRoute } }
+            );
+          }}
+        >
+          New Reminder
+        </Button>
+        <h1 className="calendar__controls-label">
           {format(new Date(date.year, date.month), "LLLL, yyyy")}
-        </h2>
+        </h1>
       </div>
       <div className="calendar__header">
         {Array.from({ length: 7 }).map((_, index) => (
@@ -82,6 +96,7 @@ const Calendar: FC = () => {
                 day,
                 new Date(date.year, date.month)
               ),
+              "day-of-month--today": isToday(day),
             })}
             onClick={() => {
               navigate(

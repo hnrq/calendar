@@ -51,6 +51,7 @@ const Day: FC = () => {
       <div className="day__reminders">
         {reminders.map((reminder) => (
           <Reminder
+            key={reminder.id}
             onClick={() => {
               navigate(
                 {

@@ -1,11 +1,9 @@
-import { Link } from "react-router-dom";
+import Readme from "components/Readme";
 
-function App() {
-  return (
-    <div>
-      Check out this <Link to="calendar">calendar</Link>
-    </div>
-  );
-}
+const App = () => (
+  <div>
+    <Readme />
+  </div>
+);
 
 export default App;

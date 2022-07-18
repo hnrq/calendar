@@ -10,4 +10,9 @@
   &__edit-button {
     align-self: flex-end;
   }
+
+  &__preview {
+    display: flex;
+    flex-direction: column;
+  }
 }

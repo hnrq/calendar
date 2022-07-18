@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 
-import { autocompleteRegion, City } from "api/weatherApi";
+import { City, useCitySearch, useWeather, Weather } from "api/weatherApi";
 import Button from "components/Button";
 import Combobox from "components/Combobox";
 import TextField from "components/TextField";
@@ -18,6 +18,7 @@ export interface ReminderFormProps {
 interface FormValues {
   label: string;
   city: City;
+  weather?: Weather;
   date: string;
   time: string;
 }
@@ -31,27 +32,19 @@ const ReminderForm: FC<ReminderFormProps> = ({ onSubmit, defaultValues }) => {
   const query = watch("city");
 
   const [debouncedQuery] = useDebounce(query as unknown as string, 500);
-  const [result, setResult] = useState<City[]>(
-    defaultValues && defaultValues.city ? [defaultValues.city] : []
-  );
+  const { data, loading } = useCitySearch(debouncedQuery, {
+    data: defaultValues && defaultValues.city ? [defaultValues.city] : [],
+  });
+  const { get } = useWeather();
 
-  useEffect(() => {
-    let active = true;
-    load();
-    return () => {
-      active = false;
-    };
-
-    async function load() {
-      if (typeof debouncedQuery === "string") {
-        const result = await autocompleteRegion(debouncedQuery);
-        if (!active) return;
-        setResult(result);
-      }
-    }
-  }, [debouncedQuery]);
   return (
-    <form className="reminder-form" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="reminder-form"
+      onSubmit={handleSubmit(async (values) => {
+        const weather = await get(values.city);
+        onSubmit({ ...values, weather });
+      })}
+    >
       <TextField
         helperText={formState.errors?.label?.message}
         error={formState.errors?.label !== undefined}
@@ -64,14 +57,23 @@ const ReminderForm: FC<ReminderFormProps> = ({ onSubmit, defaultValues }) => {
       />
       <Combobox
         hideCaret
-        data={result}
+        hideEmptyPopup
+        data={data}
         name="city"
-        dataKey="locationKey"
+        dataKey="id"
         textField="name"
+        busy={loading}
+        style={{ width: "300px" }}
         helperText={formState.errors?.city?.message}
         error={formState.errors?.city !== undefined}
-        placeholder="City"
-        rules={{ required: "City is required" }}
+        filter={() => true}
+        placeholder="Search for a city"
+        rules={{
+          required: "City is required",
+          validate: (value: string | City) =>
+            typeof value !== "string" ||
+            "You should select a city from the dropdown",
+        }}
         control={control}
       />
       <TextField

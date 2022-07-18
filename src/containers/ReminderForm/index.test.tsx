@@ -1,17 +1,20 @@
 import mockReminders from "__mocks__/reminders";
 import { render, fireEvent, waitFor } from "@testing-library/react";
+import * as weatherApi from "api/weatherApi";
 import _ from "lodash";
 
 import ReminderForm, { ReminderFormProps } from ".";
-
-jest.mock("api/weatherApi", () => ({
-  autocompleteRegion: jest.fn(() => [mockReminders[0].city]),
-}));
 
 const renderReminderForm = (props?: Partial<ReminderFormProps>) =>
   render(<ReminderForm onSubmit={jest.fn()} {...props} />);
 
 describe("<ReminderForm />", () => {
+  beforeEach(() => {
+    jest.spyOn(weatherApi, "useCitySearch").mockReturnValue({
+      data: [mockReminders[0].city],
+    } as unknown as ReturnType<typeof weatherApi.useCitySearch>);
+  });
+
   it("renders a label input field", async () => {
     const { findByPlaceholderText } = renderReminderForm();
     expect(await findByPlaceholderText("Label")).toBeInTheDocument();
@@ -19,7 +22,9 @@ describe("<ReminderForm />", () => {
 
   it("renders a city input field", async () => {
     const { findByPlaceholderText } = renderReminderForm();
-    expect(await findByPlaceholderText("City")).toBeInTheDocument();
+    expect(
+      await findByPlaceholderText("Search for a city")
+    ).toBeInTheDocument();
   });
 
   it("renders a date input field", async () => {
@@ -39,16 +44,18 @@ describe("<ReminderForm />", () => {
 
   it("calls onSubmit if the form has been successfully submitted", async () => {
     const onSubmit = jest.fn();
-    const { getByPlaceholderText, getByText } = renderReminderForm({
+    const { getByPlaceholderText, getByText, findByText } = renderReminderForm({
       onSubmit,
     });
 
     fireEvent.input(getByPlaceholderText("Label"), {
       target: { value: mockReminders[0].label },
     });
-    fireEvent.input(getByPlaceholderText("City"), {
+    fireEvent.focus(getByPlaceholderText("Search for a city"));
+    fireEvent.input(getByPlaceholderText("Search for a city"), {
       target: { value: mockReminders[0].city },
     });
+    fireEvent.click(await findByText(mockReminders[0].city.name));
     fireEvent.input(getByPlaceholderText("Date"), {
       target: { value: mockReminders[0].date },
     });
@@ -72,7 +79,8 @@ describe("<ReminderForm />", () => {
       ((await findByPlaceholderText("Label")) as HTMLInputElement).value
     ).toBe(mockReminders[0].label);
     expect(
-      ((await findByPlaceholderText("City")) as HTMLInputElement).value
+      ((await findByPlaceholderText("Search for a city")) as HTMLInputElement)
+        .value
     ).toBe(mockReminders[0].city.name);
     expect(
       ((await findByPlaceholderText("Date")) as HTMLInputElement).value
@@ -105,8 +113,8 @@ describe("<ReminderForm />", () => {
 
     it("requires City field to be filled", async () => {
       const { getByPlaceholderText, findByText } = renderReminderForm();
-      fireEvent.focus(getByPlaceholderText("City"));
-      fireEvent.blur(getByPlaceholderText("City"));
+      fireEvent.focus(getByPlaceholderText("Search for a city"));
+      fireEvent.blur(getByPlaceholderText("Search for a city"));
 
       expect(await findByText("City is required")).toBeInTheDocument();
     });

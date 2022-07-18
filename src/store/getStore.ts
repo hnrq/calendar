@@ -13,7 +13,10 @@ export interface RootState {
 const localStorageMiddleware: Middleware<{}, RootState> =
   (store) => (next) => (action) => {
     const result = next(action);
-    localStorage.setItem("state", JSON.stringify(store.getState()));
+    localStorage.setItem(
+      "reminders",
+      JSON.stringify(store.getState().reminders)
+    );
     return result;
   };
 

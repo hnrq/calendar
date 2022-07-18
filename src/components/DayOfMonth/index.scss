@@ -3,6 +3,7 @@
 .day-of-month {
   display: flex;
   flex-direction: column;
+  background-color: var(--background);
 
   &:hover {
     cursor: pointer;
@@ -17,5 +18,11 @@
     flex-direction: column;
     row-gap: utils.spacing(0.5);
   }
+
+  &--today {
+    background: var(--color-primary-90);
+    font-weight: bold;
+  }
+
   overflow: hidden;
 }
