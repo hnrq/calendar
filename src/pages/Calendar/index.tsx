@@ -1,10 +1,12 @@
 import { FC, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import classNames from "classnames";
 import Button from "components/Button";
 import DayOfMonth from "components/DayOfMonth";
 import { format, isSameMonth, isWeekend } from "date-fns";
+import { DayRoute } from "pages/Day";
 import { RootState } from "store/getStore";
 import { getDaysOfCalendarMonth } from "utils/date";
 
@@ -16,6 +18,7 @@ const Calendar: FC = () => {
     year: new Date().getFullYear(),
   });
   const reminders = useSelector((state: RootState) => state.reminders);
+  const navigate = useNavigate();
 
   const daysOfMonth = useMemo(
     () => getDaysOfCalendarMonth(date.month, date.year),
@@ -66,6 +69,11 @@ const Calendar: FC = () => {
           <span className="material-icons">navigate_next</span>
         </Button>
       </div>
+      <div className="calendar__header">
+        {Array.from({ length: 7 }).map((_, index) => (
+          <span>{format(daysOfMonth[index], "EEE")}</span>
+        ))}
+      </div>
       <div className="calendar__days-of-month">
         {daysOfMonth.map((day) => (
           <DayOfMonth
@@ -79,7 +87,17 @@ const Calendar: FC = () => {
                 new Date(date.year, date.month)
               ),
             })}
-            onClick={() => console.log("FaaF")}
+            onClick={() => {
+              navigate(
+                {
+                  pathname: DayRoute,
+                  search: new URLSearchParams({
+                    date: format(day, "yyyy-MM-dd"),
+                  }).toString(),
+                },
+                { state: { from: CalendarRoute } }
+              );
+            }}
           />
         ))}
       </div>

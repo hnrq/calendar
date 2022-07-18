@@ -12,6 +12,13 @@
     gap: 1px;
   }
 
+  &__header {
+    display: flex;
+    justify-content: space-around;
+    color: var(--background);
+    background-color: var(--color-primary-50);
+  }
+
   &__month-controls,
   &__year-controls {
     display: flex;

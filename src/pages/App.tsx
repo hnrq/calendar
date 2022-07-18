@@ -1,5 +1,11 @@
+import { Link } from "react-router-dom";
+
 function App() {
-  return <div></div>;
+  return (
+    <div>
+      Check out this <Link to="calendar">calendar</Link>
+    </div>
+  );
 }
 
 export default App;

@@ -1,0 +1,31 @@
+@use "../../sass/utils/spacing";
+
+.combobox {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--body-font);
+
+  .rw-widget-picker {
+    border: none;
+  }
+
+  &__input.rw-input {
+    background-color: #eee;
+    color: var(--text-high-emphasis);
+    font-weight: 500;
+    border: none;
+    border-radius: 4px;
+    font-family: var(--body-font);
+  }
+
+  &__helper-text {
+    font-size: 0.75rem;
+    margin-top: spacing.spacing(0.5);
+    &--error {
+      color: var(--error-color);
+    }
+    &--hidden {
+      display: none;
+    }
+  }
+}

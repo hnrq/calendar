@@ -86,7 +86,7 @@ const ReminderPage = () => {
           <span className="reminder-page__date">
             {reminder?.date}, {reminder?.time}
           </span>
-          <span className="reminder-page__city">{reminder?.city}</span>
+          <span className="reminder-page__city">{reminder?.city?.name}</span>
         </>
       )}
     </div>

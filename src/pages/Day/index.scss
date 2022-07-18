@@ -1,0 +1,23 @@
+@use "../../sass/utils/spacing";
+
+.day {
+  &__controls {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__reminders {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    row-gap: spacing.spacing(1);
+  }
+
+  &__reminders-empty {
+    margin: auto;
+    justify-self: center;
+    font-size: 0.8rem;
+    color: var(--text-medium-emphasis);
+    font-style: italic;
+  }
+}
