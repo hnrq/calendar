@@ -12,7 +12,7 @@ import "./index.scss";
 
 export interface ReminderFormProps {
   onSubmit: (reminder: FormValues) => void;
-  defaultValues?: Omit<Reminder, "id">;
+  defaultValues?: Partial<Omit<Reminder, "id">>;
 }
 
 interface FormValues {
@@ -32,7 +32,7 @@ const ReminderForm: FC<ReminderFormProps> = ({ onSubmit, defaultValues }) => {
 
   const [debouncedQuery] = useDebounce(query as unknown as string, 500);
   const [result, setResult] = useState<City[]>(
-    defaultValues ? [defaultValues.city] : []
+    defaultValues && defaultValues.city ? [defaultValues.city] : []
   );
 
   useEffect(() => {

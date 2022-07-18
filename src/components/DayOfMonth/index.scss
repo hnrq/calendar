@@ -9,7 +9,8 @@
   }
 
   &__label {
-    font-weight: 600;
+    font-size: 0.8rem;
+    text-align: center;
   }
   &__reminders {
     display: flex;
@@ -17,8 +18,4 @@
     row-gap: utils.spacing(0.5);
   }
   overflow: hidden;
-
-  &--weekend {
-    color: var(--color-primary-70);
-  }
 }

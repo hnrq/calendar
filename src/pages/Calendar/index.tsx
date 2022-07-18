@@ -27,26 +27,9 @@ const Calendar: FC = () => {
 
   return (
     <div className="calendar p-2 container-lg">
-      <h1>Calendar</h1>
-      <div className="calendar__year-controls">
+      <div className="calendar__controls mb-1">
         <Button
-          variant="secondary"
-          onClick={() => setDate((date) => ({ ...date, year: date.year - 1 }))}
-        >
-          <span className="material-icons">navigate_before</span>
-        </Button>
-        <span>{date.year}</span>
-        <Button
-          variant="secondary"
-          onClick={() => setDate((date) => ({ ...date, year: date.year + 1 }))}
-        >
-          <span className="material-icons">navigate_next</span>
-        </Button>
-      </div>
-
-      <div className="calendar__month-controls">
-        <Button
-          variant="secondary"
+          variant="icon"
           onClick={() =>
             setDate(({ month, year }) => {
               if (month === 0) return { month: 11, year: year - 1 };
@@ -56,9 +39,8 @@ const Calendar: FC = () => {
         >
           <span className="material-icons">navigate_before</span>
         </Button>
-        <span>{format(new Date(date.year, date.month), "LLLL")}</span>
         <Button
-          variant="secondary"
+          variant="icon"
           onClick={() =>
             setDate(({ month, year }) => {
               if (month === 11) return { month: 0, year: year + 1 };
@@ -68,6 +50,21 @@ const Calendar: FC = () => {
         >
           <span className="material-icons">navigate_next</span>
         </Button>
+        <Button
+          className="ml-3 calendar__today"
+          onClick={() => {
+            const today = new Date();
+            setDate({
+              month: today.getMonth(),
+              year: today.getFullYear(),
+            });
+          }}
+        >
+          Today
+        </Button>
+        <h2 className="calendar__controls-label">
+          {format(new Date(date.year, date.month), "LLLL, yyyy")}
+        </h2>
       </div>
       <div className="calendar__header">
         {Array.from({ length: 7 }).map((_, index) => (
@@ -81,7 +78,6 @@ const Calendar: FC = () => {
             key={day.getTime()}
             reminders={reminders[format(day, "yyyy-MM-dd")] ?? []}
             className={classNames({
-              "day-of-month--weekend": isWeekend(day),
               "day-of-month--different-month": !isSameMonth(
                 day,
                 new Date(date.year, date.month)

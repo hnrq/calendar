@@ -45,7 +45,7 @@ const ReminderPage = () => {
           </h2>
 
           <ReminderForm
-            defaultValues={reminder}
+            defaultValues={reminder ?? { date }}
             onSubmit={(formValues) => {
               if (reminder !== undefined) {
                 dispatch(

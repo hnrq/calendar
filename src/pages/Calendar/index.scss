@@ -15,15 +15,17 @@
   &__header {
     display: flex;
     justify-content: space-around;
-    color: var(--background);
-    background-color: var(--color-primary-50);
+    color: var(--text-medium-emphasis);
   }
 
-  &__month-controls,
-  &__year-controls {
+  &__controls {
     display: flex;
     align-items: center;
-    justify-content: center;
+  }
+
+  &__controls-label {
+    font-size: 3rem;
+    margin-left: auto;
   }
 
   & .day-of-month {

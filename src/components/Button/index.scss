@@ -30,12 +30,13 @@
     background: none;
   }
 
-  &--full-width {
-    width: 100%;
-  }
-
   &--icon {
     padding: 0;
+    background: none;
     color: var(--text-medium-emphasis);
+  }
+
+  &--full-width {
+    width: 100%;
   }
 }

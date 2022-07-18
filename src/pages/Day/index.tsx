@@ -26,7 +26,22 @@ const Day: FC = () => {
   return (
     <div className="day" style={{ width: "300px" }}>
       <div className="day__controls">
-        <Button variant="icon">
+        <Button
+          variant="icon"
+          onClick={() => {
+            navigate(
+              {
+                pathname: ReminderRoute,
+                search: new URLSearchParams({ date }).toString(),
+              },
+              {
+                state: {
+                  from: CalendarRoute,
+                },
+              }
+            );
+          }}
+        >
           <span className="material-icons">add</span>
         </Button>
       </div>
