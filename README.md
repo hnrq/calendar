@@ -14,6 +14,6 @@ To style the components, I've used Sass, along with CSS Vars. A Material Design'
 
 ## How to deploy
 
-- Run `npm install` | `yarn install` to install all dependencies.
+- Run `npm install --force` | `yarn install --force` to install all dependencies. Force is needed because some deps are breaking with React v18
 - Run `npm start` | `yarn run` to run the app locally.
 - You can find the project running on `localhost:3000`.
