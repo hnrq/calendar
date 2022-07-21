@@ -116,6 +116,6 @@ const Calendar: FC = () => {
   );
 };
 
-export const CalendarRoute = "/calendar";
+export const CalendarRoute = "/";
 
 export default Calendar;
